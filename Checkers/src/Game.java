@@ -5,6 +5,7 @@ public class Game {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		generateStartPos();
 		printBoard();
 		
 	}
@@ -38,15 +39,51 @@ public class Game {
 	public static void generateStartPos()
 	{
 		String buttcheeks = "1b1b1b1bb1b1b1b11b1b1b1b88w1w1w1w1w11w1w1w1ww1w1w1w11";
+		
+		decodeAndSet(buttcheeks);
 	}
-	public void decodeAndSet(String position)
+	public static void decodeAndSet(String position)
 	{
+		int x = 0;
+		int y = 0;
 		for (char character : position.toCharArray())
 		{
-			if (character)
+			if (isNumeric(String.valueOf(character)))
 			{
+				if (x >= 7)
+				{
+					x = 0;
+					y += 1;
+				}
+				x += Integer.parseInt(String.valueOf(character)) - 1;
+//			}
+//			else if (character == 'w')
+//			{
+//				System.out.println(x);
+//				System.out.println(y);
+//				board[x][y] = 1;
 				
+//			}
+//			else if (character == 'b')
+//			{
+//				System.out.println(x);
+//				System.out.println(y);
+//				board[x][y] = 2;
 			}
+			System.out.println("x: " + x);
+			System.out.println(y);
+
 		}
+	}
+	public static boolean isNumeric(String strNum) {
+	    if (strNum == null) {
+	        return false;
+	    }
+	    try {
+	        double d = Double.parseDouble(strNum);
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
+	    return true;
 	}
 }
