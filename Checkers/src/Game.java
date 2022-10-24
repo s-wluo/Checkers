@@ -38,41 +38,43 @@ public class Game {
 	
 	public static void generateStartPos()
 	{
-		String buttcheeks = "1b1b1b1bb1b1b1b11b1b1b1b88w1w1w1w1w11w1w1w1ww1w1w1w11";
+		String buttcheeks = "1w1w1w1w1w";//"1b1b1b1bb1b1b1b11b1b1b1b88w1w1w1w1w11w1w1w1ww1w1w1w11";
+		
 		
 		decodeAndSet(buttcheeks);
 	}
 	public static void decodeAndSet(String position)
 	{
-		int x = 0;
-		int y = 0;
+		int x = 1;
+		int y = 1;
 		for (char character : position.toCharArray())
 		{
+
 			if (isNumeric(String.valueOf(character)))
 			{
-				if (x >= 7)
+				if (y > 8)
 				{
-					x = 0;
-					y += 1;
+					y = y % 8;
+					x += y / 8;
+					System.out.println(y);
 				}
-				x += Integer.parseInt(String.valueOf(character)) - 1;
-//			}
-//			else if (character == 'w')
-//			{
-//				System.out.println(x);
-//				System.out.println(y);
-//				board[x][y] = 1;
 				
-//			}
-//			else if (character == 'b')
-//			{
-//				System.out.println(x);
-//				System.out.println(y);
-//				board[x][y] = 2;
-			}
-			System.out.println("x: " + x);
-			System.out.println(y);
+				y += Integer.parseInt(String.valueOf(character));
 
+				
+			}
+			else if (character == 'w')
+			{
+				board[x - 1][y - 1] = 1;
+				y += 1;
+				
+			}
+			else if (character == 'b')
+			{
+				board[x - 1][y - 1] = 2;
+				y += 1;
+			}
+			
 		}
 	}
 	public static boolean isNumeric(String strNum) {
@@ -86,4 +88,7 @@ public class Game {
 	    }
 	    return true;
 	}
+	
+	
+
 }
