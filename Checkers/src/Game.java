@@ -38,41 +38,51 @@ public class Game {
 	
 	public static void generateStartPos()
 	{
-		String buttcheeks = "1w1w1w1w1w";//"1b1b1b1bb1b1b1b11b1b1b1b88w1w1w1w1w11w1w1w1ww1w1w1w11";
+		String buttcheeks = "1b1b1b1bb1b1b1b2b1b1b1b88w1w1w1w2w1w1w1ww1w1w1w";
 		
 		
 		decodeAndSet(buttcheeks);
 	}
 	public static void decodeAndSet(String position)
 	{
-		int x = 1;
-		int y = 1;
-		for (char character : position.toCharArray())
+		int pos = 0;
+		int[] board1d = new int[64];
+		
+		if (position.length() > 64) 
 		{
-
-			if (isNumeric(String.valueOf(character)))
+			position = position.substring(0, 63);
+		}
+		
+		char[] character = position.toCharArray();
+		for (int i = 0; i < position.toCharArray().length; i++)
+		{
+			if (pos > 63) {break;}
+			if (isNumeric(String.valueOf(character[i])))
 			{
-				if (y > 8)
-				{
-					y = y % 8;
-					x += y / 8;
-					System.out.println(y);
-				}
-				
-				y += Integer.parseInt(String.valueOf(character));
-
-				
+				pos += Math.abs(Integer.parseInt(String.valueOf(character[i]))) - 1;
 			}
-			else if (character == 'w')
+			else if (character[i] == 'w')
 			{
-				board[x - 1][y - 1] = 1;
-				y += 1;
-				
+				board1d[pos] = 1;
 			}
-			else if (character == 'b')
+			else if (character[i] == 'b')
 			{
-				board[x - 1][y - 1] = 2;
-				y += 1;
+				board1d[pos] = 2;
+			}
+			else
+			{
+				continue;
+			}
+			pos += 1;
+			
+		}
+		
+		
+		for (int i = 0;i < board.length;i++)
+		{
+			for (int j = 0;j < board.length;j++)
+			{
+				board[i][j] = board1d[(i * board.length + j)];
 			}
 			
 		}
